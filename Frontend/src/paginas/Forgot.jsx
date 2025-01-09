@@ -12,7 +12,7 @@ export const Forgot = () => {
     const handleChange = (e) => {
         setMail({
             ...mail,
-            [e.target.name]:e.taget.value
+            [e.target.name]:e.target.value
         })
     }
 
@@ -20,11 +20,12 @@ export const Forgot = () => {
         e.preventDefault()
         try {
             const url = "http://localhost:5000/api/recuperar-password"
-            const respuesta = await axios.get(url)
+            const respuesta = await axios.post(url, mail)
             setMensaje({
                 respuesta: respuesta.data.msg,
                 tipo:true
             })
+			setMail("")
         } catch (error) {
             setMensaje({
                 respuesta: error.response.data.msg,
