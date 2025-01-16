@@ -23,10 +23,4 @@ router.post("/paciente/registro", verificarAutenticacion,registrarPaciente);
 router.put("/paciente/actualizar/:id", verificarAutenticacion,actualizarPaciente);
 router.delete("/paciente/eliminar/:id", verificarAutenticacion,eliminarPaciente);
 
-
-
-
-
-
-
 export default router
