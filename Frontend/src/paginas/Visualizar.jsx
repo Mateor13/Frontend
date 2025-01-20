@@ -5,9 +5,10 @@ import Mensaje from '../componets/Alertas/Alertas.jsx';
 import ModalTratamiento from '../componets/Modals/ModalTratamiento.jsx';
 import tratamientosContext from '../context/TratamientosProvider.jsx';
 import TablaTratamientos from '../componets/TablaTratamientos.jsx';
+import AuthContext from '../context/AuthProvider';
 
 const Visualizar = () => {
-
+    const { auth } = useContext(AuthContext)
     const {modal, handleModal, tratamientos, setTratamientos} = useContext(tratamientosContext)
 
     const { id } = useParams()
@@ -19,8 +20,6 @@ const Visualizar = () => {
 			nuevaFecha.setMinutes(nuevaFecha.getMinutes() + nuevaFecha.getTimezoneOffset())
         return new Intl.DateTimeFormat('es-EC',{dateStyle:'long'}).format(nuevaFecha)
     }
-
-    
     
 
     useEffect(() => {
@@ -95,7 +94,12 @@ const Visualizar = () => {
                             </div>
                             <hr className='my-4' />
                             <p className='mb-8'>Este submódulo te permite visualizar los tratamientos del paciente</p>
-                            <button className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700" onClick={handleModal}>Registrar</button>
+                            {
+                                auth.rol === "veterinario" &&
+                                (
+                                    <button className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700" onClick={handleModal}>Registrar</button>
+                                )
+                            }
                             <hr className='my-4' />
              {modal && (<ModalTratamiento idPaciente={paciente._id}/>)}
 

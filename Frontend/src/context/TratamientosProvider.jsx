@@ -13,7 +13,6 @@ const TratamientosProvider= ({children})=>{
     }
 
     const registrarTratamientos = async (data) =>{
-        console.log(data)
         try {
             
             const token = localStorage.getItem('token')
@@ -51,8 +50,7 @@ const TratamientosProvider= ({children})=>{
         }
     }
 
-    const cambiarTratamientos = async (data) =>{
-        console.log(data)
+    const cambiarTratamientos = async (id) =>{
         try {
             const confirmar = confirm("Vas a cambiar el estado, ¿Estás seguro?")
             if (confirmar){
