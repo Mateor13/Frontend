@@ -4,10 +4,11 @@ import axios from 'axios';
 import Mensaje from '../componets/Alertas/Alertas.jsx';
 import ModalTratamiento from '../componets/Modals/ModalTratamiento.jsx';
 import tratamientosContext from '../context/TratamientosProvider.jsx';
+import TablaTratamientos from '../componets/TablaTratamientos.jsx';
 
 const Visualizar = () => {
 
-    const {modal, handleModal} = useContext(tratamientosContext)
+    const {modal, handleModal, tratamientos} = useContext(tratamientosContext)
 
     const { id } = useParams()
     const [paciente, setPaciente] = useState({})
@@ -35,6 +36,7 @@ const Visualizar = () => {
                 }
                 const respuesta = await axios.get(url, options)
                 setPaciente(respuesta.data.paciente)
+                setTratamientos(respuesta.data.tratamientos)
             } catch (error) {
                 setMensaje({ respuesta: error.response.data.msg, tipo: false })
             }
@@ -96,6 +98,14 @@ const Visualizar = () => {
                             <button className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700" onClick={handleModal}>Registrar</button>
                             <hr className='my-4' />
              {modal && (<ModalTratamiento idPaciente={paciente._id}/>)}
+
+             {
+                tratamientos.length == 0
+                ?
+                <p>"No existen registros"</p>
+                :
+                <TablaTratamientos tratamientos={tratamientos}/>
+             }
              
        </>
                         )
