@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { MdDeleteForever, MdOutlineSecurityUpdateGood, MdPublishedWithChanges } from "react-icons/md";
+import tratamientosContext from "../context/TratamientosProvider";
 
 const TablaTratamientos = ({tratamientos}) => {
+    const {eliminarTratamientos, cambiarTratamientos} = useContext(tratamientosContext)
     return (
         <table className='w-full mt-5 table-auto shadow-lg  bg-white'>
             <thead className='bg-gray-800 text-slate-400'>
@@ -25,11 +28,16 @@ const TablaTratamientos = ({tratamientos}) => {
                                 <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{tratamiento.estado && "activo"}</span>
                             </td>
                             <td className='py-2 text-center'>
-                            <MdPublishedWithChanges className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"/>
+                            <MdPublishedWithChanges className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                            
+                            onClick={()=>cambiarTratamientos(tratamiento._id)}
+                            />
                             
                             <MdOutlineSecurityUpdateGood className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"/>
 
-                            <MdDeleteForever className="h-8 w-8 text-red-900 cursor-pointer inline-block"/>
+                            <MdDeleteForever className="h-8 w-8 text-red-900 cursor-pointer inline-block"
+                            
+                            onClick={()=>eliminarTratamientos(tratamiento._id)}/>
                             </td>
                         </tr>
                     ))

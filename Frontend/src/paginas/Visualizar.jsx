@@ -8,7 +8,7 @@ import TablaTratamientos from '../componets/TablaTratamientos.jsx';
 
 const Visualizar = () => {
 
-    const {modal, handleModal, tratamientos} = useContext(tratamientosContext)
+    const {modal, handleModal, tratamientos, setTratamientos} = useContext(tratamientosContext)
 
     const { id } = useParams()
     const [paciente, setPaciente] = useState({})
