@@ -1,13 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import AuthContext from "../context/AuthProvider";
 import { MdDeleteForever, MdNoteAdd, MdInfo } from "react-icons/md";
 import axios from 'axios';
-import Mensaje from "./Alertas/Alertas.jsx";
-import {useNavigate} from 'react-router-dom';
+import Mensaje from "./Alertas/Alertas";
+import { useNavigate } from 'react-router-dom'
+import AuthContext from "../context/AuthProvider";
+
 
 const Tabla = () => {
+
     const { auth } = useContext(AuthContext)
     const navigate = useNavigate()
+
     const [pacientes, setPacientes] = useState([])
 
     const listarPacientes = async () => {
@@ -26,6 +29,11 @@ const Tabla = () => {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        listarPacientes()
+    }, [])
+
 
     const handleDelete = async (id) => {
         try {
@@ -49,17 +57,13 @@ const Tabla = () => {
         }
     }
 
-    useEffect(() => {
-        listarPacientes()
-    }, [])
-
 
     return (
         <>
             {
                 pacientes.length == 0
                     ?
-                    <Mensaje tipo={false}>{'No existen registros'}</Mensaje>
+                    <Mensaje tipo={'active'}>{'No existen registros'}</Mensaje>
                     :
                     <table className='w-full mt-5 table-auto shadow-lg  bg-white'>
                         <thead className='bg-gray-800 text-slate-400'>
@@ -86,9 +90,8 @@ const Tabla = () => {
                                             <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{paciente.estado && "activo"}</span>
                                         </td>
                                         <td className='py-2 text-center'>
-                                            <MdNoteAdd className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2" 
-                                            onClick={() => navigate(`/dashboard/visualizar/${paciente._id}`)}
-                                            />
+                                            <MdNoteAdd className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2" onClick={() => navigate(`/dashboard/visualizar/${paciente._id}`)}/>
+
                                             {
                                                 auth.rol === "veterinario" &&
                                                 (
@@ -103,14 +106,6 @@ const Tabla = () => {
                                                     </>
                                                 )
                                             }
-
-                                            <MdInfo className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2" 
-                                            onClick={()=>{navigate(`/dashboard/actualizar/${paciente._id}`)}}
-                                            />
-
-                                            <MdDeleteForever className="h-7 w-7 text-red-900 cursor-pointer inline-block" 
-                                            onClick={()=>{handleDelete(paciente._id)}}
-                                            />
                                         </td>
                                     </tr>
                                 ))

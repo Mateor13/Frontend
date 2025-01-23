@@ -33,6 +33,7 @@ const Login = () => {
         try {
             const respuesta = await axios.post(url, form)
             localStorage.setItem('token', respuesta.data.token)
+            localStorage.setItem('rol', respuesta.data.rol)
             setAuth(respuesta.data)
             navigate('/dashboard')
         } catch (error) {
